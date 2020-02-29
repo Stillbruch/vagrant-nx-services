@@ -1,0 +1,20 @@
+zone "local" {
+    type master;
+    file "/etc/bind/db.local";
+    notify yes;
+    allow-transfer { 192.168.0.124; };
+};
+
+zone "nx-services.local" {
+    type master;
+    file "/etc/bind/db.nx-services.local";
+    notify yes;
+    allow-transfer { 192.168.0.124; };
+};
+
+zone "0.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.0";
+    notify yes;
+    allow-transfer { 192.168.0.124; };
+};

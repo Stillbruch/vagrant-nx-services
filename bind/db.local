@@ -1,0 +1,11 @@
+$TTL    3600
+@       IN      SOA     ns1.local.      root.nx-services.local. (
+                        2020021702
+                        1H
+                        2H
+                        1D
+                        1H )
+@               IN     NS      ns1.local.
+@               IN     NS      ns2.local.
+ns1             IN     A       192.168.0.121
+ns2             IN     A       192.168.0.124

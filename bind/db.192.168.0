@@ -1,0 +1,13 @@
+$TTL    3600
+@       IN      SOA     ns1.nx-services.local.      root.nx-services.local. (
+                        2020021702
+                        1H
+                        2H
+                        1D
+                        1H )
+@       IN      NS      ns1.nx-services.local.
+@       IN      NS      ns2.nx-services.local.
+121     IN      PTR     vgrnx21
+122     IN      PTR     vgrnx22
+123     IN      PTR     vgrnx23
+124     IN      PTR     vgrnx24

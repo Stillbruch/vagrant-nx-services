@@ -1,0 +1,22 @@
+$TTL    3600
+@       IN      SOA     ns1.nx-services.local.      root.nx-services.local. (
+                        2020021702  ; serial number
+                        1H          ; refresh = time when slave will refresh zone from master
+                        2H          ; retry = time between retries if slave fails to contact master
+                        1D          ; expiry = time when zone data is no longer authoritative
+                        1H )         ; nxdomain ttl = negative caching time
+@                       IN      NS      ns1.nx-services.local.
+@                       IN      NS      ns2.nx-services.local.
+@                       IN      A       192.168.0.122
+ns1                     IN      A       192.168.0.121
+ns2                     IN      A       192.168.0.124
+vgrnx21                 IN      A       192.168.0.121
+vgrnx22                 IN      A       192.168.0.122
+vgrnx23                 IN      A       192.168.0.123
+vgrnx24                 IN      A       192.168.0.124
+dns                     IN      CNAME   vgrnx21
+dns2                    IN      CNAME   vgrnx24
+web                     IN      CNAME   vgrnx22
+ftp                     IN      CNAME   vgrnx23
+www                     IN      CNAME   vgrnx22
+wwwin                   IN      CNAME   vgrnx22

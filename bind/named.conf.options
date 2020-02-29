@@ -1,0 +1,34 @@
+acl "trusted" {
+    localhost;
+    192.168.0.0/24;
+};
+options {
+    directory "/var/cache/bind"; # default
+
+    dnssec-validation auto; # default
+
+    auth-nxdomain no;    # default / conform to RFC1035
+
+    listen-on port 53 {
+        any;
+    };
+
+    listen-on-v6 {
+        none;
+    };	
+
+    allow-query {
+        trusted;
+    };
+
+    allow-recursion {
+        trusted;
+    };
+
+    forwarders {
+        62.2.17.60;
+        62.2.24.158;
+        62.2.17.61;
+        62.2.24.162;
+    };
+};
