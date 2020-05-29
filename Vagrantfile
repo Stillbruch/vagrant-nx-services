@@ -37,16 +37,6 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
-  config.vm.define "ftp" do |ftp|
-    ftp.vm.network "public_network", ip: "192.168.0.123"
-    ftp.vm.provision "shell", inline: <<-SHELL
-      apt-get update
-      # apt-get upgrade -y
-      apt-get install -y proftpd dnsutils
-      hostnamectl set-hostname vgrnx23.nx-services.local
-    SHELL
-  end
-
   config.vm.define "dns2" do |dns2|
     dns2.vm.provision "file", source: "./bind2", destination: "/tmp/bind"
     dns2.vm.network "public_network", ip: "192.168.0.124"
@@ -64,4 +54,20 @@ Vagrant.configure("2") do |config|
     vb.cpus = "1"
     vb.memory = "512"
   end
+
+  (1..2).each do |i|
+    config.vm.define "pmp#{i}" do |node|
+      node.vm.network "public_network", ip: "192.168.0.9#{i}"
+      node.vm.provision "shell", inline: <<-EOF
+        hostnamectl set-hostname pmp#{i}
+        sed -i "s/127\.0\.1\.1.*/127\.0\.1\.1 pmp#{i} pmp#{i}.nx-services.local/g" /etc/hosts
+        wget -q https://www.manageengine.com/products/passwordmanagerpro/8621641/ManageEngine_PMP_64bit.bin
+      EOF
+      node.vm.provider "virtualbox" do |vb|
+        vb.cpus = "1"
+        vb.memory = "1024"
+      end
+    end
+  end
+
 end

@@ -7,7 +7,8 @@ $TTL    3600
                         1H )
 @       IN      NS      ns1.nx-services.local.
 @       IN      NS      ns2.nx-services.local.
+91      IN      PTR     pmp1
+92      IN      PTR     pmp2
 121     IN      PTR     vgrnx21
 122     IN      PTR     vgrnx22
-123     IN      PTR     vgrnx23
 124     IN      PTR     vgrnx24
