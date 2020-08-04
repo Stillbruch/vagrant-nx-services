@@ -11,4 +11,3 @@ $TTL    3600
 92      IN      PTR     pmp2
 121     IN      PTR     vgrnx21
 122     IN      PTR     vgrnx22
-124     IN      PTR     vgrnx24

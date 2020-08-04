@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "dns" do |dns|
     dns.vm.provision "file", source: "./bind", destination: "/tmp/bind"
-    dns.vm.network "public_network", ip: "192.168.0.121"
+    dns.vm.network "public_network", ip: "192.168.0.121", bridge: "en9"
     dns.vm.provision "shell", inline: <<-SHELL
       apt-get update
       # apt-get upgrade -y
@@ -17,34 +17,14 @@ Vagrant.configure("2") do |config|
       systemctl restart bind9
     SHELL
   end
-
-  config.vm.define "web" do |web|
-    web.vm.provision "file", source: "./apache2", destination: "/tmp/apache2"
-    web.vm.provision "file", source: "./www", destination: "/tmp/www"
-    web.vm.network "public_network", ip: "192.168.0.122"
-    web.vm.provision "shell", inline: <<-SHELL
-      apt-get update
-      # apt-get upgrade -y
-      apt-get install -y apache2 dnsutils
-      hostnamectl set-hostname vgrnx22.nx-services.local
-      mkdir /var/www/www.nx-services.local
-      mkdir /var/www/wwwin.nx-services.local
-      cp /tmp/www/www.nx-services.local-index.html /var/www/www.nx-services.local/index.html
-      cp /tmp/www/wwwin.nx-services.local-index.html /var/www/wwwin.nx-services.local/index.html
-      cp /tmp/apache2/*.conf /etc/apache2/sites-available
-      a2ensite $(ls /etc/apache2/sites-available/)
-      apache2ctl graceful
-    SHELL
-  end
-
   config.vm.define "dns2" do |dns2|
     dns2.vm.provision "file", source: "./bind2", destination: "/tmp/bind"
-    dns2.vm.network "public_network", ip: "192.168.0.124"
+    dns2.vm.network "public_network", ip: "192.168.0.122", bridge: "en9"
     dns2.vm.provision "shell", inline: <<-SHELL
       apt-get update
       # apt-get upgrade -y
       apt-get install -y bind9 dnsutils
-      hostnamectl set-hostname vgrnx24.nx-services.local
+      hostnamectl set-hostname vgrnx22.nx-services.local
       cp -r /tmp/bind/. /etc/bind
       systemctl restart bind9
     SHELL
@@ -57,15 +37,15 @@ Vagrant.configure("2") do |config|
 
   (1..2).each do |i|
     config.vm.define "pmp#{i}" do |node|
-      node.vm.network "public_network", ip: "192.168.0.9#{i}"
+      node.vm.network "public_network", ip: "192.168.0.9#{i}", bridge: "en9"
       node.vm.provision "shell", inline: <<-EOF
-        hostnamectl set-hostname pmp#{i}
-        sed -i "s/127\.0\.1\.1.*/127\.0\.1\.1 pmp#{i} pmp#{i}.nx-services.local/g" /etc/hosts
-        wget -q https://www.manageengine.com/products/passwordmanagerpro/8621641/ManageEngine_PMP_64bit.bin
+        apt-get update
+        apt-get install -y unzip
+        hostnamectl set-hostname pmp#{i}.nx-services.local
       EOF
       node.vm.provider "virtualbox" do |vb|
-        vb.cpus = "1"
-        vb.memory = "1024"
+        vb.cpus = "2"
+        vb.memory = "2024"
       end
     end
   end

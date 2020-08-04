@@ -8,4 +8,4 @@ $TTL    3600
 @               IN     NS      ns1.local.
 @               IN     NS      ns2.local.
 ns1             IN     A       192.168.0.121
-ns2             IN     A       192.168.0.124
+ns2             IN     A       192.168.0.122
