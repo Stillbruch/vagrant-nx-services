@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "dns" do |dns|
     dns.vm.provision "file", source: "./bind", destination: "/tmp/bind"
-    dns.vm.network "public_network", ip: "192.168.0.121", bridge: "en9"
+    dns.vm.network "public_network", ip: "192.168.0.121", bridge: "en9: CalDigit Thunderbolt Ethernet"
     dns.vm.provision "shell", inline: <<-SHELL
       apt-get update
       # apt-get upgrade -y
@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   end
   config.vm.define "dns2" do |dns2|
     dns2.vm.provision "file", source: "./bind2", destination: "/tmp/bind"
-    dns2.vm.network "public_network", ip: "192.168.0.122", bridge: "en9"
+    dns2.vm.network "public_network", ip: "192.168.0.122", bridge: "en9: CalDigit Thunderbolt Ethernet"
     dns2.vm.provision "shell", inline: <<-SHELL
       apt-get update
       # apt-get upgrade -y
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
 
   (1..2).each do |i|
     config.vm.define "pmp#{i}" do |node|
-      node.vm.network "public_network", ip: "192.168.0.9#{i}", bridge: "en9"
+      node.vm.network "public_network", ip: "192.168.0.9#{i}", bridge: "en9: CalDigit Thunderbolt Ethernet"
       node.vm.provision "shell", inline: <<-EOF
         apt-get update
         apt-get install -y unzip
